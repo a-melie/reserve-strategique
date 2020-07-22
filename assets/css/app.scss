@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Squada+One&display=swap');
+
+
+$primary : #f4f6ff;
+$secondary: #ffcb74;
+$success: #4f8a8b;
+$danger : #ea907a;
+
+body{
+    background: $primary;
+    h1{
+        font-family: 'Squada One', cursive;
+    }
+}
