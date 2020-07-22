@@ -1,0 +1,13 @@
+@import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Squada+One&display=swap');
+@import "variables";
+
+
+body{
+    background: $primary;
+    font-family: $mainFont;
+    color: $success;
+    h1{
+        font-family: $titleFont;
+    }
+}

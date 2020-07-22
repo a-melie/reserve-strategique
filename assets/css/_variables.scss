@@ -1,0 +1,15 @@
+$theme-colors: (
+        "primary": #f4f6ff,
+        "secondary": #ffcb74,
+        "danger": #ea907a,
+        "success":#4f8a8b,
+);
+
+$primary : #f4f6ff;
+$secondary: #ffcb74;
+$success: #4f8a8b;
+$danger : #ea907a;
+
+$mainFont :'Poppins', sans-serif;
+$titleFont: 'Squada One', cursive;
+@import "node_modules/bootstrap/scss/bootstrap";
