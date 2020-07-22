@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Product
 {
@@ -51,6 +53,23 @@ class Product
      * @ORM\Column(type="boolean")
      */
     private $isHated;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Comment::class, mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $comment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -100,8 +119,7 @@ class Product
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
-
+        $this->createdAt = new DateTime('Europe/Paris');
         return $this;
     }
 
@@ -137,6 +155,47 @@ class Product
     public function setIsHated(bool $isHated): self
     {
         $this->isHated = $isHated;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getComment(): ?Comment
+    {
+        return $this->comment;
+    }
+
+    public function setComment(Comment $comment): self
+    {
+        $this->comment = $comment;
+
+        // set the owning side of the relation if necessary
+        if ($comment->getProduct() !== $this) {
+            $comment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

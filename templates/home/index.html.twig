@@ -3,10 +3,20 @@
 {% block title %}Réserve Stratégique{% endblock %}
 
 {% block body %}
-    <h1>Hello {{ controller_name }}</h1>
-    <div class="alert alert-danger" role="alert">
-        A simple primary alert—check it out!
+    <img src="{{ asset('build/logo.png') }}" class="mt-5" width="150">
+    <h1 class="text-center text-danger mt-4">Bienvenue !</h1>
+    <div class="container">
+        <h4>Votre gestionnaire de produits de beauté.</h4>
+        <p class="m-5">Inscrivez-vous pour enregistrer vos produits, connaître vos stocks et ne plus jamais acheter un produit qui ne vous a déçu !</p>
+
+        <div class="row m-5">
+            <div class="col s-6 mr-2">
+                <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-secondary text-success">Inscription</a>
+            </div>
+            <div class="col s-6 ml-2">
+                <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-secondary text-success">Connexion</a>
+            </div>
+        </div>
     </div>
 
-    <img src="{{ asset('build/logo.png') }}" width="50"><br>
 {% endblock %}

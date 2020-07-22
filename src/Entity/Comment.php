@@ -27,6 +27,12 @@ class Comment
      */
     private $rate;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Product::class, inversedBy="comment", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Comment
     public function setRate(?int $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
