@@ -11,10 +11,10 @@
 
         <div class="row m-5">
             <div class="col s-6 mr-2">
-                <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-secondary text-success">Inscription</a>
+                <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-secondary text-success{{ app.user ? 'hide':'' }}">Inscription</a>
             </div>
             <div class="col s-6 ml-2">
-                <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-secondary text-success">Connexion</a>
+                <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-secondary text-success {{ app.user ? 'hide':'' }}">Connexion</a>
             </div>
         </div>
     </div>
