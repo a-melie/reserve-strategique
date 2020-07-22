@@ -9,9 +9,7 @@ Installation
     * run yarn encore dev
     
 Usage
-Launch the server with the command below and follow the instructions on the homepage /;
-
-$ symfony server:start
-
+Launch the server with the command below 
+    * symfony server:start
 Then go to localhost url
 
