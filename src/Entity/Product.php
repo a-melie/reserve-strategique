@@ -112,12 +112,17 @@ class Product
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+     * @return $this
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
         $this->createdAt = new DateTime('Europe/Paris');
         return $this;

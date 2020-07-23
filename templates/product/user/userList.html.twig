@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes produits{% endblock %}
+
+{% block body %}
+    <h1>Mes produits</h1>
+    <div class="row">
+    {% for product in products %}
+            <div class="card col-sm-6 col-md-4 mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name | upper }}</h5>
+                    <p class="card-text">
+                        <ul class="list-unstyled">
+                            <li>{{ product.category.name ~ ' - ' ~ product.brand | capitalize }}</li>
+                            <li>{{ product.size }} mL</li>
+                            <li>{{ product.color ? product.color : ''}}</li>
+                            <li class="d-flex justify-content-around">
+                                {% if product.isFavorite == true %}
+                                    <i class="far fa-heart fa-2x text-danger" data-toggle="tooltip" data-placement="top" title="Love is in the air"></i>
+                                {% else %}
+                                    <i class="far fa-heart fa-2x icon-hover " data-toggle="tooltip" data-placement="bottom" title="+ Favoris"></i>
+                                {% endif %}
+                                {% if product.isHated == true %}
+                                    <i class="far fa-times-circle fa-2x red" data-toggle="tooltip" data-placement="top" title="Détesté ! Fuis !"></i>
+                                {% else %}
+                                    <i class="far fa-times-circle fa-2x icon-hover" data-toggle="tooltip" data-placement="top" title="Si hais clique"></i>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                </div>
+            </div>
+    {% endfor %}
+    </div>
+
+
+
+
+
+{% endblock %}
