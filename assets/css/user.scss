@@ -17,6 +17,25 @@ i:hover{
 
 .filter{
   display: block;
-  position: sticky;
-  top:20px;
+
+}
+.card{
+  position: relative;
+}
+.corner{
+  position: relative;
+  right:-140px;
+}
+.card{
+  height: 300px;
+  .card-footer{
+    height: 50px;
+  }
+  button{
+    border: none;
+    background-color: white;
+  }
+  .card-footer{
+    background-color: white;
+  }
 }

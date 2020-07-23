@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Comment;
 use App\Entity\Product;
 use App\Entity\Program;
+use App\Form\CommentType;
 use App\Form\ProductType;
 use App\Form\ProgramSearchType;
 use App\Form\SearchFormType;
 use App\Form\SearchType;
+use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,33 +25,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/list", name="user_list", methods={"GET","POST"})
+     * @Route("/list", name="user_list", methods={"GET","POST", "DELETE"})
      * @param Request $request
      * @param ProductRepository $productRepository
      * @param SearchData $searchData
+     * @param CommentRepository $commentRepository
+     * @param Comment $comment
      * @return Response
      */
-    public function userProductList (Request $request,ProductRepository $productRepository, SearchData $searchData): Response
-    {
+    public function userProductList (
+        Request $request,
+        ProductRepository $productRepository,
+        SearchData $searchData,
+        CommentRepository $commentRepository
+    ): Response {
         $products = $productRepository->findByUser($this->getUser(), ['category'=>'ASC']);
-       /**
-        * $form = $this->createForm(SearchType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()){
-            $products = $productRepository->findLike($form->getData()['searchField'], $this->getUser());
-        }
-**/
+
         $form = $this->createForm(SearchFormType::class, $searchData);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $products = $productRepository->findSearch($searchData);
         }
 
-
         return $this->render('product/user/userList.html.twig', [
             'products' => $products,
             'form'=>$form->createView(),
-
+            'comments'=> $commentRepository->findAll()
         ]);
     }
 
@@ -104,6 +107,9 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Product $product
+     * @return Response
      */
     public function delete(Request $request, Product $product): Response
     {
@@ -111,9 +117,11 @@ class ProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();
+            $this->addFlash('success', 'Produit supprimé de votre liste');
+
         }
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('product_user_list');
     }
 
     /**
@@ -173,24 +181,28 @@ class ProductController extends AbstractController
      *
      * @Route("/favorites", name="favorites", methods={"GET","POST"})
      * @param ProductRepository $productRepository
+     * @param CommentRepository $commentRepository
      * @return Response
      */
-    public function indexFavorite(ProductRepository $productRepository): Response
+    public function indexFavorite(ProductRepository $productRepository, CommentRepository $commentRepository): Response
     {
        return $this->render('product/user/favorites.html.twig',[
-           'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isFavorite')
+           'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isFavorite'),
+           'comments'=> $commentRepository->findAll()
        ]);
     }
 
     /**
      * @Route("/hated", name="hated", methods={"GET","POST"})
      * @param ProductRepository $productRepository
+     * @param CommentRepository $commentRepository
      * @return Response
      */
-    public function indexhated(ProductRepository $productRepository): Response
+    public function indexhated(ProductRepository $productRepository, CommentRepository $commentRepository): Response
     {
         return $this->render('product/user/hated.html.twig',[
-            'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isHated')
+            'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isHated'),
+            'comments'=> $commentRepository->findAll()
         ]);
 
     }
