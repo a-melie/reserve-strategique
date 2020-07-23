@@ -3,10 +3,11 @@
 {% block title %}Mes produits{% endblock %}
 
 {% block body %}
-    <h1>Mes produits</h1>
+    <h1 class="m-5">Mes produits</h1>
     <div class="row">
     {% for product in products %}
-            <div class="card col-sm-6 col-md-4 mb-2">
+        <div class="col-sm-4">
+            <div class="card col-sm-12 mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name | upper }}</h5>
                     <p class="card-text">
@@ -18,12 +19,12 @@
                                 {% if product.isFavorite == true %}
                                     <i class="far fa-heart fa-2x text-danger" data-toggle="tooltip" data-placement="top" title="Love is in the air"></i>
                                 {% else %}
-                                    <i class="far fa-heart fa-2x icon-hover " data-toggle="tooltip" data-placement="bottom" title="+ Favoris"></i>
+                                    <i class="far fa-heart fa-2x icon-hover " data-toggle="tooltip" data-placement="bottom" title="Toi je t'aime. Viens avec moi."></i>
                                 {% endif %}
                                 {% if product.isHated == true %}
                                     <i class="far fa-times-circle fa-2x red" data-toggle="tooltip" data-placement="top" title="Détesté ! Fuis !"></i>
                                 {% else %}
-                                    <i class="far fa-times-circle fa-2x icon-hover" data-toggle="tooltip" data-placement="top" title="Si hais clique"></i>
+                                    <i class="far fa-times-circle fa-2x icon-hover" data-toggle="tooltip" data-placement="bottom" title="Tu me détestes ? Clique"></i>
                                 {% endif %}
                             </li>
                         </ul>
@@ -31,11 +32,10 @@
                     <p class="card-text"><small class="text-muted"></small></p>
                 </div>
             </div>
+        </div>
+        {% else %}
+        <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
     {% endfor %}
     </div>
-
-
-
-
 
 {% endblock %}
