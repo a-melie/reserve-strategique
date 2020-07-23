@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,19 +43,25 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $product->setUser($this->getUser());
+            $product->setIsHated(false);
+            $product->setIsFavorite(false);
             $entityManager->persist($product);
             $entityManager->flush();
+            $this->addFlash('success', 'Produit ajouté à votre liste');
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('product_user_list');
         }
 
         return $this->render('product/new.html.twig', [
