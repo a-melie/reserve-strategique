@@ -4,15 +4,6 @@
 
 {% block body %}
     <h1 class="m-5">Mes produits</h1>
-
-    <!--//recherche-->
-
-
-<div class="container">
-
-</div>
-
-
     <div class="row">
         <div class="col-sm-3 text-left pl-2">
             {% include '_components/_filter.html.twig' with {form: form} only %}
@@ -21,7 +12,7 @@
         <div class="col-sm-9">
             <div class="row">
             {% for product in products %}
-                {% include '_components/_cardProduct.html.twig' with {product: product }  only%}
+                {% include '_components/_cardProduct.html.twig' with {product: product, comments: comments }  %}
             {% else %}
                 <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
             {% endfor %}

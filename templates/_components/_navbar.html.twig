@@ -9,22 +9,22 @@
         <ul class="navbar-nav ml-auto text-center">
             {% if app.user %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('product_new') }}">Ajouter à ma liste  |</a>
+                <a class="nav-link" href="{{ path('product_new') }}">Ajouter à ma liste <i class="fas fa-plus"></i>  |</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('product_user_list') }}">Mes produits  |</a>
+                <a class="nav-link" href="{{ path('product_user_list') }}">Mes produits <i class="fas fa-stream"></i> |</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('product_favorites') }}">Mes favoris  |</a>
+                <a class="nav-link" href="{{ path('product_favorites') }}">Mes favoris <i class="far fa-heart"></i> |</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('product_hated') }}">Mes détestés  |</a>
+                <a class="nav-link" href="{{ path('product_hated') }}">Mes détestés <i class="fas fa-book-dead"></i> |</a>
             </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('profile_edit', {'id': app.user.id}) }}"> Mon profil  |</a>
+                    <a class="nav-link" href="{{ path('profile_edit', {'id': app.user.id}) }}"> Mon profil <i class="far fa-user-circle"></i>  |</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@"> Rechercher <i class="fab fa-searchengin"></i>  |</a>
+                    <a class="nav-link" href="{{ path('comment_new') }}"> Ajout commentaire <i class="far fa-edit"></i>  |</a>
                 </li>
                 <li class="nav-item text-left">
                     <a href="{{ path('app_logout') }}" class="nav-link" > Se déconnecter</a>

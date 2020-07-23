@@ -20,17 +20,25 @@
                     <div class="hate-btn">
                         <a href="#" id="hateList-{{product.id}}" class="hateList {{ product.isHated ? 'active' : '' }}"
                            data-href="{{ path('product_add_hated', {'id':  product.id } ) }}">
-                            <i class="fas fa-exclamation-triangle fa-2x "
+                            <i class="fas fa-book-dead fa-2x "
                                data-toggle="tooltip"
                                data-placement="{{ product.isHated ?'top': 'bottom' }}"
                                title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je clique' }}"></i>
                         </a>
                     </div>
-
                 </li>
             </ul>
             </p>
-            <p class="card-text"><small class="text-muted"></small></p>
         </div>
+        <div class="card-footer">
+            <small class="text-muted">
+                {% for comment in comments %}
+                    {% if comment.product.id == product.id %}
+                        <i class="far fa-lightbulb fa-2x"></i> : {{ comment.content}}
+                    {% endif %}
+                {% endfor %}
+            </small>
+        </div>
+        {{ include('product/_delete_form.html.twig') }}
     </div>
 </div>
