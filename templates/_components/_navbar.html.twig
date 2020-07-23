@@ -20,6 +20,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('product_hated') }}">Mes détestés</a>
             </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('profile_edit', {'id': app.user.id}) }}"> Mon profil</a>
+                </li>
 
                 <li class="nav-item text-left">
                 <a href="{{ path('app_logout') }}" class="nav-link" > Se déconnecter</a>
