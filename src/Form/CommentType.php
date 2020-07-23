@@ -27,6 +27,7 @@ class CommentType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('product', EntityType::class, [
                 'class'=>Product::class,
@@ -36,11 +37,23 @@ class CommentType extends AbstractType
             ])
             ->add('rate', IntegerType::class, [
                 'label' => 'Note sur 5',
+                'required'=>false,
                 'attr' => ['min' => 1, 'max' => 5, 'step' => 1]])
             ->add('content', TextareaType::class, [
                 'label'=> 'Message'
             ])
         ;
+    }
+
+    public function getUserProducts($user)
+    {
+        $products =  $this->productRepository->findByUser($user);
+        $choices = [];
+        foreach ($products as $product) {
+            $choices[$product->getName()] = $product->getName() . ' | ' . $product->getCategory()->getName() . ' | ' .$product->getBrand();
+        }
+        return $choices;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -31,11 +31,13 @@ class CommentController extends AbstractController
     /**
      * @Route("/new", name="comment_new", methods={"GET","POST"})
      * @param Request $request
+     * @param EntityManagerInterface $entityManager
      * @return Response
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $comment = new Comment();
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -44,7 +46,7 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('product_user_list');
         }
 
 
