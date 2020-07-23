@@ -28,6 +28,15 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLike($search, $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.name LIKE :n')->setParameter('n', '%' . $search . '%'  )
+            ->andWhere('p.user= :u')->setParameter('u', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

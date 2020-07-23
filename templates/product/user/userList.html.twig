@@ -4,6 +4,14 @@
 
 {% block body %}
     <h1 class="m-5">Mes produits</h1>
+
+    <!--//recherche-->
+
+    {{ form_start(form, { 'attr' : { 'class': 'm-5 text-center'} }) }}
+    {{ form_widget(form.searchField) }}
+    <button type="submit" name="btnSearch" class="btn btn-danger text-success m-3">Rechercher</button>
+    {{ form_end(form) }}
+
     <div class="row">
     {% for product in products %}
         <div class="col-sm-4">
@@ -33,7 +41,7 @@
                                         <i class="fas fa-exclamation-triangle fa-2x "
                                            data-toggle="tooltip"
                                            data-placement="{{ product.isHated ?'top': 'bottom' }}"
-                                           title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je je clique' }}"></i>
+                                           title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je clique' }}"></i>
                                     </a>
                                 </div>
 
