@@ -16,17 +16,24 @@
                             <li>{{ product.size }} mL</li>
                             <li>{{ product.color ? product.color : '~'}}</li>
                             <li class="d-flex justify-content-around">
-                                {% if product.isFavorite == true %}
-                                    <a id="favoriteList-{{product.id}}" class="favList" href="{{ path('product_add_favorite', {'id':  product.id } ) }}"><i class="fas fa-heart fa-2x text-danger" data-toggle="tooltip" data-placement="top" title="Love is in the air"></i></a>
-                                {% else %}
-                                    <a id="favoriteList-{{product.id}}" class="favList" href="{{ path('product_add_favorite', {'id':  product.id } ) }}"><i class="far fa-heart fa-2x icon-hover " data-toggle="tooltip" data-placement="bottom" title="Toi je t'aime. Viens avec moi."></i></a>
-                                {% endif %}
+                                <div class="love-btn">
+                                    <a href="#" id="favList-{{product.id}}" class="favList {{ product.isFavorite ? 'active' : '' }}"
+                                       data-href="{{ path('product_add_favorite', {'id':  product.id } ) }}">
+                                        <i class="fas fa-heart fa-2x "
+                                           data-toggle="tooltip"
+                                           data-placement="{{ product.isFavorite ?'top': 'bottom' }}"
+                                           title="{{ product.isFavorite ?'Love is in the air !': 'Toi je t\'aime. Viens avec moi.' }}"></i>
+                                    </a>
+                                </div>
 
 
                                 <div class="hate-btn">
                                     <a href="#" id="hateList-{{product.id}}" class="hateList {{ product.isHated ? 'active' : '' }}"
                                     data-href="{{ path('product_add_hated', {'id':  product.id } ) }}">
-                                        <i class="fas fa-exclamation-triangle fa-2x " data-toggle="tooltip" data-placement="{{ product.isHated ?'top': 'bottom' }}" title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je je clique' }}"></i>
+                                        <i class="fas fa-exclamation-triangle fa-2x "
+                                           data-toggle="tooltip"
+                                           data-placement="{{ product.isHated ?'top': 'bottom' }}"
+                                           title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je je clique' }}"></i>
                                     </a>
                                 </div>
 

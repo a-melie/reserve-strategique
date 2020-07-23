@@ -118,14 +118,12 @@ class ProductController extends AbstractController
      * @Route("/{id}/addfavorite", name="add_favorite", methods={"GET","POST"})
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @param ProductRepository $productRepository
      * @param Product $product
      * @return Response
      */
     public function addFavorite(
         Request $request,
         EntityManagerInterface $entityManager,
-        ProductRepository $productRepository,
         Product $product
     ): Response {
         if ( !$product->getIsFavorite()) {
@@ -138,7 +136,9 @@ class ProductController extends AbstractController
         $entityManager->persist($product);
         $entityManager->flush();
 
-        return $this->redirectToRoute('product_user_list');
+        return $this->json([
+            'isFavorite' => $product->getIsFavorite()
+        ]);
     }
 
     /**
@@ -146,14 +146,12 @@ class ProductController extends AbstractController
      * @param Request $request
      * @param Product $product
      * @param EntityManagerInterface $entityManager
-     * @param ProductRepository $productRepository
      * @return Response
      */
     public function addHated(
         Request $request,
         Product $product,
-        EntityManagerInterface $entityManager,
-        ProductRepository $productRepository
+        EntityManagerInterface $entityManager
     ): Response {
         if (!$product->getIsHated()){
             $product->setIsHated(true);
