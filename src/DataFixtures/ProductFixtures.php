@@ -15,7 +15,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
     const PRODUCTS = [
         'A to Z'=>[
             'brand'=>'OPI',
-            'size'=>'10mL',
+            'size'=>'10',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -23,7 +23,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Burgundy'=>[
             'brand'=>'Essie',
-            'size'=>'10mL',
+            'size'=>'10',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -31,7 +31,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Pimp my shoes'=>[
             'brand'=>'Essie',
-            'size'=>'10mL',
+            'size'=>'10',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -39,7 +39,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'paradize island'=>[
             'brand'=>'Essie',
-            'size'=>'10mL',
+            'size'=>'10',
             'color'=>'vert',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -47,7 +47,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'satin sister'=>[
             'brand'=>'Essie',
-            'size'=>'10mL',
+            'size'=>'10',
             'color'=>'bleu',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -55,7 +55,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'rouge à lèvre'=>[
             'brand'=>'Maybelline',
-            'size'=>'7mL',
+            'size'=>'7',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -63,7 +63,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         '194'=>[
             'brand'=>'Maybelline',
-            'size'=>'7mL',
+            'size'=>'7',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -71,7 +71,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Lover'=>[
             'brand'=>'Maybelline',
-            'size'=>'7mL',
+            'size'=>'7',
             'color'=>'rouge',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -79,7 +79,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'Pathfinder'=>[
             'brand'=>'Maybelline',
-            'size'=>'7mL',
+            'size'=>'7',
             'color'=>'rose',
             'isFavorite'=>false,
             'isHated'=>true,
@@ -87,7 +87,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'gel douche vanille'=>[
             'brand'=>'Petit Marseillais',
-            'size'=>'200mL',
+            'size'=>'200',
             'color'=>'',
             'isFavorite'=>true,
             'isHated'=>false,
@@ -95,7 +95,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'haribo'=>[
             'brand'=>'dop',
-            'size'=>'200mL',
+            'size'=>'200',
             'color'=>'',
             'isFavorite'=>false,
             'isHated'=>true,
@@ -103,7 +103,7 @@ class ProductFixtures extends Fixture implements DependentFixtureInterface
         ],
         'shampooing herbal'=>[
             'brand'=>'Herbal Essence',
-            'size'=>'200mL',
+            'size'=>'200',
             'color'=>'',
             'isFavorite'=>false,
             'isHated'=>true,

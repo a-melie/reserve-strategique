@@ -3,18 +3,18 @@
 {% block title %}Réserve Stratégique{% endblock %}
 
 {% block body %}
-    <img src="{{ asset('build/logo.png') }}" class="mt-5" width="150">
+    <img src="{{ asset('build/logo.png') }}" class="mt-5" width="200">
     <h1 class="text-center text-danger mt-4">Bienvenue !</h1>
     <div class="container">
-        <h4>Votre gestionnaire de produits de beauté.</h4>
-        <p class="m-5">Inscrivez-vous pour enregistrer vos produits, connaître vos stocks et ne plus jamais acheter un produit qui ne vous a déçu !</p>
+        <h3>Votre gestionnaire de produits de beauté.</h3>
+        <h5 class="m-5 {{ app.user ? 'hide':'' }}">Enregistrez vos produits, ayez toujours à portée de main vos stocks pour ne plus jamais acheter un produit qui vous a déçu !</h5>
 
-        <div class="row m-5">
+        <div class="row m-5 {{ app.user ? 'hide':'' }}">
             <div class="col s-6 mr-2">
-                <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-secondary text-success{{ app.user ? 'hide':'' }}">Inscription</a>
+                <a href="{{ path('app_register') }}" class="btn btn-lg btn-outline-secondary text-success">Inscription</a>
             </div>
             <div class="col s-6 ml-2">
-                <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-secondary text-success {{ app.user ? 'hide':'' }}">Connexion</a>
+                <a href="{{ path('app_login') }}" class="btn btn-lg btn-outline-secondary text-success">Connexion</a>
             </div>
         </div>
     </div>

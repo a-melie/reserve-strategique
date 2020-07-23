@@ -1,3 +1,13 @@
+body{
+  background: $primary;
+  font-family: $mainFont;
+  color: $success;
+  h1{
+    font-family: $titleFont;
+    color: $danger;
+  }
+}
+
 .hide{
   display: none;
 }
