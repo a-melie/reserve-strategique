@@ -6,7 +6,6 @@ use App\Data\SearchData;
 use App\Entity\Comment;
 use App\Entity\Product;
 use App\Entity\Program;
-use App\Form\CommentType;
 use App\Form\ProductType;
 use App\Form\ProgramSearchType;
 use App\Form\SearchFormType;
@@ -14,6 +13,7 @@ use App\Form\SearchType;
 use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/product", name="product_")
+ * @IsGranted("ROLE_USER")
  */
 class ProductController extends AbstractController
 {
@@ -30,7 +31,6 @@ class ProductController extends AbstractController
      * @param ProductRepository $productRepository
      * @param SearchData $searchData
      * @param CommentRepository $commentRepository
-     * @param Comment $comment
      * @return Response
      */
     public function userProductList (
