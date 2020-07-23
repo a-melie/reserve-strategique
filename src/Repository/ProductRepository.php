@@ -60,6 +60,16 @@ class ProductRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    public function searchByKeyWords(?array  $keywords)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        foreach ($keywords as $i=>$keyword) {
+            $queryBuilder->orWhere('p.name LIKE :name' . $i)
+                ->setParameter('name' . $i, '%' . $keyword . '%');
+        }
+        return $queryBuilder->getQuery()->getResult();
 
     }
 

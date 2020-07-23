@@ -1,7 +1,3 @@
-.red{
-  color: red;
-}
-
 i:hover{
   cursor:pointer;
 }
@@ -14,19 +10,16 @@ i:hover{
     color: $danger;
   }
 }
-
 .filter{
   display: block;
 
-}
-.card{
-  position: relative;
 }
 .corner{
   position: relative;
   right:-140px;
 }
 .card{
+  position: relative;
   height: 300px;
   .card-footer{
     height: 50px;
@@ -37,5 +30,16 @@ i:hover{
   }
   .card-footer{
     background-color: white;
+  }
+}
+#autocompletion{
+  border: 1px dashed $danger;
+  margin-top: 0;
+  li{
+    list-style:none;
+    cursor: pointer;
+    &:hover{
+      color: $secondary;
+    }
   }
 }
