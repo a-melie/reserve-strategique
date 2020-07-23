@@ -15,6 +15,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,6 +26,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProductController extends AbstractController
 {
+    /**
+     * @Route("/keyword", name="ajax_keyword", methods={"GET","POST", "DELETE"})
+     * @param ProductRepository $productRepository
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getListOfProductNames(ProductRepository $productRepository, Request $request)
+    {
+        $keyword = $request->query->get('keyword');
+        $products = $productRepository->searchByKeyWords([$keyword]);
+       $names = [];
+       foreach ($products as $product) {
+           $names[]= $product->getName();
+       }
+       return $this->json($names, 200);
+    }
     /**
      * @Route("/list", name="user_list", methods={"GET","POST", "DELETE"})
      * @param Request $request
