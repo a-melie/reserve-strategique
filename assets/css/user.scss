@@ -2,9 +2,15 @@
   color: red;
 }
 
-.icon-hover:hover{
+i:hover{
   cursor:pointer;
 }
-.card{
-  margi
+
+.hate-btn, .love-btn{
+  a{
+    color: $success;
+  }
+  a.active{
+    color: $danger;
+  }
 }

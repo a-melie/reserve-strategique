@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,22 +43,28 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $product->setUser($this->getUser());
+            $product->setIsHated(false);
+            $product->setIsFavorite(false);
             $entityManager->persist($product);
             $entityManager->flush();
+            $this->addFlash('success', 'Produit ajouté à votre liste');
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('product_user_list');
         }
 
-        return $this->render('product/new.html.twig', [
+        return $this->render('product/user/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -105,5 +112,58 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('product_index');
+    }
+
+    /**
+     * @Route("/{id}/addfavorite", name="add_favorite", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param Product $product
+     * @return Response
+     */
+    public function addFavorite(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Product $product
+    ): Response {
+        if ( !$product->getIsFavorite()) {
+            $product->setIsFavorite(true);
+            $product->setIsHated(false);
+        } else {
+            $product->setIsFavorite(false);
+        }
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return $this->json([
+            'isFavorite' => $product->getIsFavorite()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/addhated", name="add_hated", methods={"GET","POST"})
+     * @param Request $request
+     * @param Product $product
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    public function addHated(
+        Request $request,
+        Product $product,
+        EntityManagerInterface $entityManager
+    ): Response {
+        if (!$product->getIsHated()){
+            $product->setIsHated(true);
+            $product->setIsFavorite(false);
+        } else {
+            $product->setIsHated(false);
+        }
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return $this->json([
+            'isHated' => $product->getIsHated()
+        ]);
     }
 }
