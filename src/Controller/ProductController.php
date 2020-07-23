@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Product;
+use App\Entity\Program;
 use App\Form\ProductType;
+use App\Form\ProgramSearchType;
+use App\Form\SearchFormType;
+use App\Form\SearchType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,27 +22,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("/list", name="user_list", methods={"GET","POST"})
+     * @param Request $request
      * @param ProductRepository $productRepository
+     * @param SearchData $searchData
      * @return Response
      */
-    public function index(ProductRepository $productRepository): Response
+    public function userProductList (Request $request,ProductRepository $productRepository, SearchData $searchData): Response
     {
-        return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
-        ]);
-    }
+        $products = $productRepository->findByUser($this->getUser(), ['category'=>'ASC']);
+       /**
+        * $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()){
+            $products = $productRepository->findLike($form->getData()['searchField'], $this->getUser());
+        }
+**/
+        $form = $this->createForm(SearchFormType::class, $searchData);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $products = $productRepository->findSearch($searchData);
+        }
 
-    /**
-     * @Route("/list", name="user_list", methods={"GET"})
-     * @param ProductRepository $productRepository
-     * @return Response
-     */
-    public function userProductList (ProductRepository $productRepository): Response
-    {
-        $user = $this->getUser();
+
         return $this->render('product/user/userList.html.twig', [
-            'products' => $productRepository->findByUser($user, ['category'=>'ASC']),
+            'products' => $products,
+            'form'=>$form->createView(),
+
         ]);
     }
 
