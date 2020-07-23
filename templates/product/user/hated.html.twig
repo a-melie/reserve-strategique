@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Détestés{% endblock %}
+
+{% block body %}
+    <h1 class="m-5">
+        <i class="fas fa-bolt"></i>
+        Mes détestés
+        <i class="fas fa-bolt"></i>
+    </h1>
+    {% include '_components/_productList.html.twig' %}
+{% endblock %}

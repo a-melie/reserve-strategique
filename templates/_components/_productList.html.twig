@@ -1,0 +1,21 @@
+<div class="row m-5">
+    {% for product in products %}
+        <div class="col-sm-4">
+            <div class="card col-sm-12 mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name | upper }}</h5>
+                    <p class="card-text">
+                    <ul class="list-unstyled">
+                        <li>{{ product.category.name ~ ' - ' ~ product.brand | capitalize }}</li>
+                        <li>{{ product.size }} mL</li>
+                        <li>{{ product.color ? product.color : '~'}}</li>
+                    </ul>
+                    </p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
+    {% endfor %}
+</div>

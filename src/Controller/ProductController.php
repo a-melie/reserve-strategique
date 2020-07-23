@@ -70,15 +70,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="show", methods={"GET"})
-     */
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
-        ]);
-    }
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
@@ -165,5 +156,31 @@ class ProductController extends AbstractController
         return $this->json([
             'isHated' => $product->getIsHated()
         ]);
+    }
+
+    /**
+     *
+     * @Route("/favorites", name="favorites", methods={"GET","POST"})
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function indexFavorite(ProductRepository $productRepository): Response
+    {
+       return $this->render('product/user/favorites.html.twig',[
+           'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isFavorite')
+       ]);
+    }
+
+    /**
+     * @Route("/hated", name="hated", methods={"GET","POST"})
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function indexhated(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/user/hated.html.twig',[
+            'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isHated')
+        ]);
+
     }
 }

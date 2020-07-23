@@ -19,6 +19,15 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findFavoritesOrHated($user, $choice)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.user = :u')->setParameter('u', $user)
+            ->andWhere('p.' . $choice . '= true')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */
