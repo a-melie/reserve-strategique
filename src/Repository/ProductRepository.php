@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -35,6 +36,31 @@ class ProductRepository extends ServiceEntityRepository
             ->andWhere('p.user= :u')->setParameter('u', $user)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param SearchData $searchData
+     * @return Product[]|array
+     */
+    public function findSearch(SearchData $searchData): array
+    {
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('c', 'p')
+            ->join('p.category', 'c');
+
+        if (!empty($searchData->q)) {
+            $query = $query->andWhere('p.name LIKE :q')
+                    ->setParameter('q', '%' . $searchData->q . '%');
+        }
+        if (!empty($searchData->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:category)')
+                ->setParameter('category', $searchData->categories);
+        }
+
+        return $query->getQuery()->getResult();
+
     }
 
     // /**

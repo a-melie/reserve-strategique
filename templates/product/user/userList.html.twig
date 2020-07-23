@@ -7,54 +7,26 @@
 
     <!--//recherche-->
 
-    {{ form_start(form, { 'attr' : { 'class': 'm-5 text-center'} }) }}
-    {{ form_widget(form.searchField) }}
-    <button type="submit" name="btnSearch" class="btn btn-danger text-success m-3">Rechercher</button>
-    {{ form_end(form) }}
+
+<div class="container">
+
+</div>
+
 
     <div class="row">
-    {% for product in products %}
-        <div class="col-sm-4">
-            <div class="card col-sm-12 mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name | upper }}</h5>
-                    <p class="card-text">
-                        <ul class="list-unstyled">
-                            <li>{{ product.category.name ~ ' - ' ~ product.brand | capitalize }}</li>
-                            <li>{{ product.size }} mL</li>
-                            <li>{{ product.color ? product.color : '~'}}</li>
-                            <li class="d-flex justify-content-around">
-                                <div class="love-btn">
-                                    <a href="#" id="favList-{{product.id}}" class="favList {{ product.isFavorite ? 'active' : '' }}"
-                                       data-href="{{ path('product_add_favorite', {'id':  product.id } ) }}">
-                                        <i class="fas fa-heart fa-2x "
-                                           data-toggle="tooltip"
-                                           data-placement="{{ product.isFavorite ?'top': 'bottom' }}"
-                                           title="{{ product.isFavorite ?'Love is in the air !': 'Toi je t\'aime. Viens avec moi.' }}"></i>
-                                    </a>
-                                </div>
+        <div class="col-sm-3 text-left pl-2">
+            {% include '_components/_filter.html.twig' with {form: form} only %}
 
-
-                                <div class="hate-btn">
-                                    <a href="#" id="hateList-{{product.id}}" class="hateList {{ product.isHated ? 'active' : '' }}"
-                                    data-href="{{ path('product_add_hated', {'id':  product.id } ) }}">
-                                        <i class="fas fa-exclamation-triangle fa-2x "
-                                           data-toggle="tooltip"
-                                           data-placement="{{ product.isHated ?'top': 'bottom' }}"
-                                           title="{{ product.isHated ?'Détesté ! Fuis !': 'Toi je te hais donc je clique' }}"></i>
-                                    </a>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </p>
-                    <p class="card-text"><small class="text-muted"></small></p>
-                </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+            {% for product in products %}
+                {% include '_components/_cardProduct.html.twig' with {product: product }  only%}
+            {% else %}
+                <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
+            {% endfor %}
             </div>
         </div>
-        {% else %}
-        <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
-    {% endfor %}
     </div>
 
 {% endblock %}

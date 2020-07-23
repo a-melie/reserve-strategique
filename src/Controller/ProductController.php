@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use App\Entity\Program;
 use App\Form\ProductType;
 use App\Form\ProgramSearchType;
+use App\Form\SearchFormType;
 use App\Form\SearchType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,21 +25,30 @@ class ProductController extends AbstractController
      * @Route("/list", name="user_list", methods={"GET","POST"})
      * @param Request $request
      * @param ProductRepository $productRepository
+     * @param SearchData $searchData
      * @return Response
      */
-    public function userProductList (Request $request,ProductRepository $productRepository): Response
+    public function userProductList (Request $request,ProductRepository $productRepository, SearchData $searchData): Response
     {
         $products = $productRepository->findByUser($this->getUser(), ['category'=>'ASC']);
-        $form = $this->createForm(SearchType::class);
+       /**
+        * $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted()){
             $products = $productRepository->findLike($form->getData()['searchField'], $this->getUser());
         }
+**/
+        $form = $this->createForm(SearchFormType::class, $searchData);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $products = $productRepository->findSearch($searchData);
+        }
+
 
         return $this->render('product/user/userList.html.twig', [
             'products' => $products,
-            'form'=> $form->createView()
+            'form'=>$form->createView(),
+
         ]);
     }
 
