@@ -3,8 +3,9 @@
 {% block title %}New Product{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un produit à ma liste</h1>
-
+    <h1 class="m-5">Ajouter un produit à ma liste</h1>
+<div class="container-fluid mt-5">
     {{ include('product/_form.html.twig') }}
+</div>
 
 {% endblock %}

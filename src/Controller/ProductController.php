@@ -64,7 +64,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('product_user_list');
         }
 
-        return $this->render('product/new.html.twig', [
+        return $this->render('product/user/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -112,5 +112,60 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('product_index');
+    }
+
+    /**
+     * @Route("/{id}/addfavorite", name="add_favorite", methods={"GET","POST"})
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param ProductRepository $productRepository
+     * @param Product $product
+     * @return Response
+     */
+    public function addFavorite(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ProductRepository $productRepository,
+        Product $product
+    ): Response {
+        if ( !$product->getIsFavorite()) {
+            $product->setIsFavorite(true);
+            $product->setIsHated(false);
+        } else {
+            $product->setIsFavorite(false);
+        }
+
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('product_user_list');
+    }
+
+    /**
+     * @Route("/{id}/addhated", name="add_hated", methods={"GET","POST"})
+     * @param Request $request
+     * @param Product $product
+     * @param EntityManagerInterface $entityManager
+     * @param ProductRepository $productRepository
+     * @return Response
+     */
+    public function addHated(
+        Request $request,
+        Product $product,
+        EntityManagerInterface $entityManager,
+        ProductRepository $productRepository
+    ): Response {
+        if (!$product->getIsHated()){
+            $product->setIsHated(true);
+            $product->setIsFavorite(false);
+        } else {
+            $product->setIsHated(false);
+        }
+        $entityManager->persist($product);
+        $entityManager->flush();
+
+        return $this->json([
+            'isHated' => $product->getIsHated()
+        ]);
     }
 }
