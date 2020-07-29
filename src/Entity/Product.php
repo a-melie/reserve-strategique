@@ -60,16 +60,17 @@ class Product
      */
     private $category;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Comment::class, mappedBy="product", cascade={"persist", "remove"})
-     */
-    private $comment;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comment;
 
     public function getId(): ?int
     {
@@ -176,23 +177,6 @@ class Product
         return $this;
     }
 
-    public function getComment(): ?Comment
-    {
-        return $this->comment;
-    }
-
-    public function setComment(Comment $comment): self
-    {
-        $this->comment = $comment;
-
-        // set the owning side of the relation if necessary
-        if ($comment->getProduct() !== $this) {
-            $comment->setProduct($this);
-        }
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -201,6 +185,18 @@ class Product
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

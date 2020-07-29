@@ -12,7 +12,7 @@
         <div class="col-sm-9">
             <div class="row">
             {% for product in products %}
-                {% include '_components/_cardProduct.html.twig' with {product: product, comments: comments }  %}
+                {% include '_components/_cardProduct.html.twig' with {product: product }  %}
             {% else %}
                 <div> Pas encore de produits enregistrés ! Fonce en ajouter !</div>
             {% endfor %}
