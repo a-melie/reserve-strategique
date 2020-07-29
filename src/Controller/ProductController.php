@@ -3,14 +3,12 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
-use App\Entity\Comment;
 use App\Entity\Product;
 use App\Entity\Program;
 use App\Form\ProductType;
 use App\Form\ProgramSearchType;
 use App\Form\SearchFormType;
 use App\Form\SearchType;
-use App\Repository\CommentRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -47,14 +45,12 @@ class ProductController extends AbstractController
      * @param Request $request
      * @param ProductRepository $productRepository
      * @param SearchData $searchData
-     * @param CommentRepository $commentRepository
      * @return Response
      */
     public function userProductList (
         Request $request,
         ProductRepository $productRepository,
-        SearchData $searchData,
-        CommentRepository $commentRepository
+        SearchData $searchData
     ): Response {
         $products = $productRepository->findByUser($this->getUser(), ['category'=>'ASC']);
 
@@ -68,7 +64,6 @@ class ProductController extends AbstractController
         return $this->render('product/user/userList.html.twig', [
             'products' => $products,
             'form'=>$form->createView(),
-            'comments'=> $commentRepository->findAll()
         ]);
     }
 
@@ -113,7 +108,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('product_user_list');
         }
 
         return $this->render('product/edit.html.twig', [
@@ -198,28 +193,24 @@ class ProductController extends AbstractController
      *
      * @Route("/favorites", name="favorites", methods={"GET","POST"})
      * @param ProductRepository $productRepository
-     * @param CommentRepository $commentRepository
      * @return Response
      */
-    public function indexFavorite(ProductRepository $productRepository, CommentRepository $commentRepository): Response
+    public function indexFavorite(ProductRepository $productRepository): Response
     {
        return $this->render('product/user/favorites.html.twig',[
            'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isFavorite'),
-           'comments'=> $commentRepository->findAll()
        ]);
     }
 
     /**
      * @Route("/hated", name="hated", methods={"GET","POST"})
      * @param ProductRepository $productRepository
-     * @param CommentRepository $commentRepository
      * @return Response
      */
-    public function indexhated(ProductRepository $productRepository, CommentRepository $commentRepository): Response
+    public function indexhated(ProductRepository $productRepository): Response
     {
         return $this->render('product/user/hated.html.twig',[
             'products' => $productRepository->findFavoritesOrHated($this->getUser(), 'isHated'),
-            'comments'=> $commentRepository->findAll()
         ]);
 
     }
